@@ -421,6 +421,11 @@
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
           <span class="text-xs font-mono text-[#9BA3AF]">Engine: <strong class="text-[#F6F1E7]">The Loupe</strong></span>
         </div>
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[#C9A15A]/40 bg-[#C9A15A]/15">
+          <span class="w-2 h-2 rounded-full bg-[#C9A15A] animate-pulse"></span>
+          <span class="text-xs font-mono text-[#9BA3AF]">Metro:</span>
+          <span id="headerLocDisplay" class="text-xs font-mono font-bold text-[#F6F1E7]">Austin, TX Metro</span>
+        </div>
         <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[#C9A15A]/30 bg-[#C9A15A]/10">
           <svg class="w-3.5 h-3.5 text-[#C9A15A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
           <span class="text-xs font-mono text-[#C9A15A] font-semibold">Trust records by the AUCTUM engine</span>
@@ -815,8 +820,31 @@
           </div>
 
           <div>
-            <label class="block text-sm font-semibold mb-2" for="projectDesc">2. Renovation Scope Description</label>
-            <textarea id="projectDesc" rows="4" class="field" placeholder="Describe desired changes, e.g.: Repaint exterior in modern two-tone charcoal and off-white, replace shutters with natural cedar slat accents, upgrade to black framed energy-efficient windows."></textarea>
+            <div class="flex items-center justify-between mb-2">
+              <label class="block text-sm font-semibold text-[#F6F1E7]" for="projectDesc">2. Natural Language Renovation Goals</label>
+              <button id="enhancePromptBtn" type="button" class="btn-secondary text-xs px-2.5 py-1 text-[#C9A15A] border border-[#C9A15A]/40 hover:border-[#C9A15A] bg-[#C9A15A]/10 hover:bg-[#C9A15A]/20 flex items-center gap-1.5 shadow-sm transition-all rounded">
+                <span>✨ AI Enhance Prompt</span>
+              </button>
+            </div>
+            <textarea id="projectDesc" rows="4" class="field text-sm leading-relaxed" placeholder="Describe desired changes, e.g.: Repaint exterior in modern two-tone charcoal and off-white, replace shutters with natural cedar slat accents, upgrade to black framed energy-efficient windows."></textarea>
+            
+            <!-- Quick Architectural Modification Suggestion Pills -->
+            <div class="mt-2.5 space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-mono text-[#9BA3AF] flex items-center gap-1">
+                  <span>💡</span> Architectural Quick-Add Suggestions:
+                </span>
+                <span class="text-[10px] font-mono text-[#C9A15A]/80">Click pill to inject into scope</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5" id="quickSpecPillsContainer">
+                <button type="button" class="spec-pill px-2.5 py-1 text-[11px] rounded bg-[#1d242b] border border-[#3a434c] text-[#9BA3AF] hover:text-[#C9A15A] hover:border-[#C9A15A]/50 transition-all font-mono" data-spec="Upgrade front windows to Andersen 400 Series Low-E matte black casements">+ Black Casements</button>
+                <button type="button" class="spec-pill px-2.5 py-1 text-[11px] rounded bg-[#1d242b] border border-[#3a434c] text-[#9BA3AF] hover:text-[#C9A15A] hover:border-[#C9A15A]/50 transition-all font-mono" data-spec="Install vertical kiln-dried Western Red Cedar tongue-and-groove shiplap on upper gables">+ Cedar Gable Cladding</button>
+                <button type="button" class="spec-pill px-2.5 py-1 text-[11px] rounded bg-[#1d242b] border border-[#3a434c] text-[#9BA3AF] hover:text-[#C9A15A] hover:border-[#C9A15A]/50 transition-all font-mono" data-spec="Replace garage door with commercial-grade anodized black aluminum and frosted glass">+ Modern Glass Garage Door</button>
+                <button type="button" class="spec-pill px-2.5 py-1 text-[11px] rounded bg-[#1d242b] border border-[#3a434c] text-[#9BA3AF] hover:text-[#C9A15A] hover:border-[#C9A15A]/50 transition-all font-mono" data-spec="Apply Romabio Classico mineral masonry limewash in warm Alabaster over red brick">+ Alabaster Limewash</button>
+                <button type="button" class="spec-pill px-2.5 py-1 text-[11px] rounded bg-[#1d242b] border border-[#3a434c] text-[#9BA3AF] hover:text-[#C9A15A] hover:border-[#C9A15A]/50 transition-all font-mono" data-spec="Install 6x6 rough-sawn cedar porch column and dual-beam architectural cylinder LED sconces">+ Cedar Column & Sconces</button>
+                <button type="button" class="spec-pill px-2.5 py-1 text-[11px] rounded bg-[#1d242b] border border-[#3a434c] text-[#9BA3AF] hover:text-[#C9A15A] hover:border-[#C9A15A]/50 transition-all font-mono" data-spec="Upgrade roof eaves with 24-gauge Galvalume standing seam metal overhangs">+ Metal Roof Accents</button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -863,6 +891,30 @@
         </div>
       </div>
 
+      
+    <!-- AI Recommended Home Modifications (High ROI) -->
+    <div class="card card-hover border border-[#C9A15A]/30">
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-[#3a434c]">
+        <div>
+          <h3 class="text-base font-bold font-display flex items-center gap-2 text-[#F6F1E7]">
+            <svg class="w-4 h-4 text-[#C9A15A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            <span>AI Recommended Home Modifications</span>
+            <span class="badge badge-brass text-[10px] font-mono">Appraisal-Optimized</span>
+            <span class="badge text-[10px] font-mono bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">Ranked by Value Recovery</span>
+          </h3>
+          <p class="text-xs text-[#9BA3AF] mt-0.5">Top-performing architectural upgrades tailored to this parcel and architectural typology, ranked by ROI and appraisal lift.</p>
+        </div>
+        <div class="text-right">
+          <p class="text-xs font-mono text-[#9BA3AF]">Cumulative Model Uplift</p>
+          <p class="text-sm font-bold font-mono text-emerald-400">+$24,500 – $32,000</p>
+        </div>
+      </div>
+
+      <div id="aiRecommendationsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 mt-4">
+        <!-- Dynamically populated by renderAiRecommendations() -->
+      </div>
+    </div>
+
       <!-- Execute Bar -->
       <div class="pt-4 border-t border-[#3a434c] flex flex-wrap items-center justify-between gap-4">
         <div class="flex items-center gap-3">
@@ -901,7 +953,7 @@
         </div>
         <div class="text-right">
           <p class="text-xs font-mono text-[#9BA3AF]">Total Materials Estimate</p>
-          <p class="text-lg font-bold font-mono text-[#C9A15A]">$8,620.00</p>
+          <p id="qtoTotalEst" class="text-lg font-bold font-mono text-[#C9A15A]">$8,620.00</p>
         </div>
       </div>
 
@@ -916,7 +968,7 @@
               <th class="py-2 px-3 text-right">Extended Cost</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-[#1E2530]">
+          <tbody id="qtoTableBody" class="divide-y divide-[#1E2530]">
             <tr>
               <td class="py-2.5 px-3 font-semibold text-white">Western Red Cedar Siding (Upper Gable)</td>
               <td class="py-2.5 px-3 text-[#9BA3AF]">480 sq ft (4.8 sq)</td>
@@ -968,6 +1020,33 @@
             </tr>
           </tbody>
         </table>
+      </div>
+      <!-- QTO Formulation & Mathematical Methodology Breakdown -->
+      <div class="mt-4 p-4 rounded-lg bg-[#12161b] border border-[#3a434c] space-y-2.5">
+        <div class="flex items-center justify-between">
+          <h4 class="text-xs font-bold font-display text-[#C9A15A] flex items-center gap-2">
+            <span>📐</span>
+            <span>Quantity Takeoff (QTO) Formulation &amp; Mathematical Engine</span>
+          </h4>
+          <span class="text-[11px] font-mono text-[#9BA3AF]">ASPE Standard v2.4</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-mono">
+          <div class="p-2.5 rounded bg-[#1d242b] border border-[#3a434c]">
+            <p class="text-[#9BA3AF] text-[11px]">1. Net Facade Envelope Calculation</p>
+            <p class="text-white font-semibold mt-1">A<sub>net</sub> = (P<sub>facade</sub> × H<sub>wall</sub>) − ∑A<sub>openings</sub></p>
+            <p class="text-[10px] text-[#9BA3AF] mt-1">1,496 sq ft gross envelope − 166 sq ft (3 windows @ 18 sf + 1 garage @ 112 sf) = <strong>1,330 sq ft net facade area</strong>.</p>
+          </div>
+          <div class="p-2.5 rounded bg-[#1d242b] border border-[#3a434c]">
+            <p class="text-[#9BA3AF] text-[11px]">2. Waste Buffer &amp; Contingency (+10%)</p>
+            <p class="text-white font-semibold mt-1">Q<sub>gross</sub> = A<sub>net</sub> × 1.10 (Standard Overhang Buffer)</p>
+            <p class="text-[10px] text-[#9BA3AF] mt-1">Covers rake cuts, gable angle miters, corner trim overlaps, and on-site handling scrap.</p>
+          </div>
+          <div class="p-2.5 rounded bg-[#1d242b] border border-[#3a434c]">
+            <p class="text-[#9BA3AF] text-[11px]">3. Regional Labor &amp; Wage Indexing</p>
+            <p class="text-white font-semibold mt-1">Cost<sub>tot</sub> = Q<sub>gross</sub> × Rate<sub>mat</sub> + (Hours × Wage<sub>metro</sub>)</p>
+            <p class="text-[10px] text-[#9BA3AF] mt-1">Labor hours indexed against BLS prevailing metropolitan wage rates (Austin: 1.05×, Denver: 1.15×, DFW: 0.98×).</p>
+          </div>
+        </div>
       </div>
     </div>
     <!-- Cost Cards -->
@@ -1315,6 +1394,27 @@
 
   <!-- TAB 6: UPSELL & OUTREACH -->
   <section data-panel="sales" class="hidden space-y-6 fade-in">
+
+    <!-- Export Report & Client Proposal Actions -->
+    <div class="flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl border border-[#3a434c] bg-[#12161b]">
+      <div>
+        <h4 class="text-sm font-bold text-[#F6F1E7] flex items-center gap-2">
+          <span>📑</span>
+          <span>Client Presentation &amp; Contract Package</span>
+        </h4>
+        <p class="text-xs text-[#9BA3AF] mt-0.5">Export complete AIA-structured architectural scope, material takeoff, and municipal permit docket.</p>
+      </div>
+      <div class="flex items-center gap-2.5">
+        <button id="exportReportBtn" type="button" class="btn-secondary text-xs px-3.5 py-2 flex items-center gap-1.5 rounded-lg border border-[#3a434c] text-[#F6F1E7] hover:border-[#C9A15A] transition-all">
+          <svg class="w-4 h-4 text-[#C9A15A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          <span>Export Markdown Dossier</span>
+        </button>
+        <button id="printProposalBtn" type="button" class="btn-primary text-xs px-3.5 py-2 flex items-center gap-1.5 rounded-lg">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          <span>Print / PDF Client Proposal</span>
+        </button>
+      </div>
+    </div>
     <!-- Upsell Matrix -->
     <div class="card space-y-3">
       <div class="flex items-center justify-between">
@@ -1947,59 +2047,277 @@ const BASE_SAMPLE_HOUSE = getBeforeImage();
   });
 
   // ---------- RENDER UI DATA ----------
+  
+  // Defensive DOM Helpers
+  const setTxt = (id, txt) => { const el = $(id); if (el) el.textContent = txt; };
+  const setHtml = (id, html) => { const el = $(id); if (el) el.innerHTML = html; };
+  const setVal = (id, val) => { const el = $(id); if (el) el.value = val; };
+  const setSrc = (id, src) => { const el = $(id); if (el && src) el.src = src; };
+
+  // ---------- AI RECOMMENDATIONS FOR HOME MODIFICATIONS ----------
+  const MODIFICATION_RECOMMENDATIONS = [
+    {
+      id: 'mod-garage',
+      title: 'Commercial Anodized Glass Garage Door',
+      badge: '+194% Cost Recovery',
+      spec: 'Install commercial-grade anodized black aluminum garage door with insulated satin-etched frosted glass lites and smart high-lift belt drive.',
+      cost: '$2,450',
+      lift: '+$7,200',
+      roi: '194%',
+      tag: 'Curb Appeal #1'
+    },
+    {
+      id: 'mod-cedar',
+      title: 'Western Red Cedar Gable Accent Siding',
+      badge: '+154% Cost Recovery',
+      spec: 'Install vertical kiln-dried #1 clear Western Red Cedar tongue-and-groove shiplap cladding on front gable elevation with dual-coat UV sealant.',
+      cost: '$2,560',
+      lift: '+$6,500',
+      roi: '154%',
+      tag: 'Architectural Depth'
+    },
+    {
+      id: 'mod-limewash',
+      title: 'Romabio Classico Mineral Brick Limewash',
+      badge: '+213% Cost Recovery',
+      spec: 'Apply breathable Romabio Classico potassium-silicate mineral masonry limewash in warm Alabaster over red brick, finished with SW Iron Ore fascia trim.',
+      cost: '$1,850',
+      lift: '+$5,800',
+      roi: '213%',
+      tag: 'High Contrast'
+    },
+    {
+      id: 'mod-windows',
+      title: 'Andersen 400 Series Matte Black Casements',
+      badge: '+159% Cost Recovery',
+      spec: 'Upgrade front fenestrations to Andersen 400 Series Low-E argon-insulated matte black dual-pane casement windows with clean profile sashes.',
+      cost: '$3,280',
+      lift: '+$8,500',
+      roi: '159%',
+      tag: 'Energy + Aesthetic'
+    },
+    {
+      id: 'mod-sconces',
+      title: 'Dual-Beam Cylinder Sconces + Cedar Post',
+      badge: '+147% Cost Recovery',
+      spec: 'Replace entryway post with structural 6x6 rough-sawn cedar timber column and install IP65 wet-location matte black architectural cylinder LED sconces (3000K).',
+      cost: '$890',
+      lift: '+$2,200',
+      roi: '147%',
+      tag: 'Entryway Focus'
+    },
+    {
+      id: 'mod-roof',
+      title: 'Galvalume Standing Seam Roof Accents',
+      badge: '+142% Cost Recovery',
+      spec: 'Install 24-gauge Galvalume standing seam metal roofing on front porch overhang and window awning with concealed clips and ice/water shield underlayment.',
+      cost: '$2,800',
+      lift: '+$6,200',
+      roi: '142%',
+      tag: 'Weatherproof'
+    }
+  ];
+
+  function renderAiRecommendations() {
+    const grid = $('aiRecommendationsGrid');
+    if (!grid) return;
+    const currentDesc = ($('projectDesc')?.value || '').toLowerCase();
+    
+    grid.innerHTML = MODIFICATION_RECOMMENDATIONS.map(mod => {
+      const isAdded = currentDesc.includes(mod.title.toLowerCase().split(' ')[0]) || 
+                      currentDesc.includes(mod.spec.toLowerCase().slice(0, 20));
+      return `
+        <div class="card p-3.5 bg-[#12161b] border ${isAdded ? 'border-emerald-500/50 bg-[#122019]' : 'border-[#3a434c] hover:border-[#C9A15A]/40'} transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-1 mb-1.5">
+              <span class="badge text-[9px] font-mono ${isAdded ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'} font-bold">${mod.badge}</span>
+              <span class="text-[10px] font-mono text-[#9BA3AF]">${mod.tag}</span>
+            </div>
+            <h4 class="text-xs font-bold text-[#F6F1E7] font-display">${mod.title}</h4>
+            <p class="text-[11px] text-[#9BA3AF] mt-1 line-clamp-2 leading-relaxed">${mod.spec}</p>
+          </div>
+          <div class="mt-3 pt-2.5 border-t border-[#3a434c] flex items-center justify-between">
+            <div class="text-[10px] font-mono">
+              <span class="text-[#9BA3AF]">Cost: <strong class="text-white">${mod.cost}</strong></span>
+              <span class="text-[#C9A15A] ml-2 font-bold">${mod.lift} Lift</span>
+            </div>
+            <button type="button" class="add-mod-btn px-2.5 py-1 text-[10px] font-mono font-bold rounded transition-all ${isAdded ? 'bg-emerald-600/30 text-emerald-300 border border-emerald-500/40' : 'bg-[#C9A15A]/15 text-[#C9A15A] border border-[#C9A15A]/40 hover:bg-[#C9A15A]/25'}" data-spec="${escapeHtml(mod.spec)}" data-title="${escapeHtml(mod.title)}">
+              ${isAdded ? '✓ Added' : '+ Add to Scope'}
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Attach listeners to recommendation buttons
+    grid.querySelectorAll('.add-mod-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const spec = e.currentTarget.getAttribute('data-spec');
+        const title = e.currentTarget.getAttribute('data-title');
+        const descInput = $('projectDesc');
+        if (!descInput) return;
+        const cur = descInput.value.trim();
+        if (!cur.toLowerCase().includes(title.toLowerCase().slice(0, 10))) {
+          descInput.value = cur ? `${cur}; ${spec}` : spec;
+          state.data.desc = descInput.value;
+          showNotice(`✓ Added ${title} to renovation scope!`);
+          renderAiRecommendations();
+        } else {
+          showNotice(`"${title}" is already included in your renovation goals.`);
+        }
+      });
+    });
+  }
+
+  // ---------- DYNAMIC QUANTITY TAKEOFF (QTO) ENGINE ----------
+  function renderQtoTable(loc, preset) {
+    const tbody = $('qtoTableBody');
+    if (!tbody) return;
+
+    // Wage / material multiplier based on metro
+    const isAustin = loc.includes('Austin');
+    const isDenver = loc.includes('Denver') || loc.includes('CO');
+    const isDFW = loc.includes('Dallas') || loc.includes('Fort Worth') || loc.includes('DFW');
+    const isMiami = loc.includes('Miami') || loc.includes('FL');
+    
+    let rateMult = 1.0;
+    if (isDenver) rateMult = 1.15;
+    else if (isAustin) rateMult = 1.05;
+    else if (isMiami) rateMult = 1.08;
+    else if (isDFW) rateMult = 0.98;
+
+    const items = [
+      {
+        item: 'Western Red Cedar Siding (Upper Gable Accent)',
+        net: '480 sq ft (4.8 sq)',
+        waste: '528 sq ft (+10%)',
+        unitRate: 4.85 * rateMult,
+        unitLabel: 'sq ft',
+        ext: 528 * (4.85 * rateMult)
+      },
+      {
+        item: 'Romabio Classico Mineral Brick Limewash',
+        net: '850 sq ft',
+        waste: '3.5 Gal (2 Buckets)',
+        unitRate: 185.00 * rateMult,
+        unitLabel: 'bucket',
+        ext: 2 * (185.00 * rateMult)
+      },
+      {
+        item: 'Andersen 400 Black Casement Windows (3-Bay)',
+        net: '3 Units (1 Center + 2 Sides)',
+        waste: '3 Units Complete',
+        unitRate: 820.00 * rateMult,
+        unitLabel: 'unit',
+        ext: 3 * (820.00 * rateMult)
+      },
+      {
+        item: 'Commercial Anodized Black Frosted Garage Door (16\'x7\')',
+        net: '1 Door Assembly (112 sq ft)',
+        waste: '1 Assembly + Tracks',
+        unitRate: 2450.00 * rateMult,
+        unitLabel: 'assembly',
+        ext: 1 * (2450.00 * rateMult)
+      },
+      {
+        item: '6x6 Rough-Sawn Cedar Porch Column + Anchor Bracket',
+        net: '1 Post (8 LF) + Base',
+        waste: '1 Post + StrongTie Bracket',
+        unitRate: 215.00 * rateMult,
+        unitLabel: 'package',
+        ext: 1 * (215.00 * rateMult)
+      },
+      {
+        item: 'Exterior Dual-Beam Architectural LED Cylinder Sconce',
+        net: '1 Fixture + Weather Box',
+        waste: '1 Complete Kit',
+        unitRate: 145.00 * rateMult,
+        unitLabel: 'kit',
+        ext: 1 * (145.00 * rateMult)
+      },
+      {
+        item: 'Concealed Fasteners, Step Flashing, Caulk & Misc Hardware',
+        net: 'Lump Sum Hardware',
+        waste: 'Included Allowance',
+        unitRate: 420.00 * rateMult,
+        unitLabel: 'lump sum',
+        ext: 1 * (420.00 * rateMult)
+      }
+    ];
+
+    const totalMaterials = items.reduce((sum, item) => sum + item.ext, 0);
+
+    tbody.innerHTML = items.map(it => `
+      <tr class="hover:bg-[#1d242b]/60 transition-colors">
+        <td class="py-2.5 px-3 font-semibold text-white">${escapeHtml(it.item)}</td>
+        <td class="py-2.5 px-3 text-[#9BA3AF]">${escapeHtml(it.net)}</td>
+        <td class="py-2.5 px-3 text-[#C9A15A] font-semibold">${escapeHtml(it.waste)}</td>
+        <td class="py-2.5 px-3 text-[#9BA3AF]">$${it.unitRate.toFixed(2)} / ${it.unitLabel}</td>
+        <td class="py-2.5 px-3 text-right font-bold text-white font-mono">$${it.ext.toFixed(2)}</td>
+      </tr>
+    `).join('');
+
+    setTxt('qtoTotalEst', `$${Math.round(totalMaterials).toLocaleString()}.00`);
+    setTxt('scopeMaterialCost', `$${Math.round(totalMaterials * 0.95).toLocaleString()} – $${Math.round(totalMaterials * 1.1).toLocaleString()}`);
+  }
+
   function renderAll() {
     const d = state.data;
     // Images
-    $('beforeCompImg').src = d.beforeImg;
-    $('afterCompImg').src = d.afterImg;
-    $('inputPreviewImg').src = d.beforeImg;
+    setSrc('beforeCompImg', d.beforeImg);
+    setSrc('afterCompImg', d.afterImg);
+    setSrc('inputPreviewImg', d.beforeImg);
 
     // Header & Input Sync
-    $('headerLocDisplay').textContent = `${d.loc} Metro`;
-    $('projectDesc').value = d.desc;
-    $('projectLoc').value = d.loc;
-    $('projectIndustry').value = d.industry;
+    setTxt('headerLocDisplay', `${d.loc} Metro`);
+    setVal('projectDesc', d.desc);
+    setVal('projectLoc', d.loc);
+    setVal('projectIndustry', d.industry);
 
     // Overview Tab
-    $('marketingText').textContent = d.marketing;
-    $('roiText').textContent = d.roi;
-    $('neighborhoodText').textContent = d.neighborhood;
-    $('schoolsText').textContent = d.schools;
-    $('investmentText').textContent = d.investment;
+    setTxt('marketingText', d.marketing);
+    setTxt('roiText', d.roi);
+    setTxt('neighborhoodText', d.neighborhood);
+    setTxt('schoolsText', d.schools);
+    setTxt('investmentText', d.investment);
 
     // Headers with location
-    $('neighborhoodHeader').textContent = `${d.loc} Neighborhood Profile`;
-    $('schoolsHeader').textContent = `${d.loc} School District`;
-    $('investmentHeader').textContent = `${d.loc} Cap Rate Outlook`;
-    $('permitsDeptHeader').textContent = `${d.loc} Municipal Building & Permitting`;
+    setTxt('neighborhoodHeader', `${d.loc} Neighborhood Profile`);
+    setTxt('schoolsHeader', `${d.loc} School District`);
+    setTxt('investmentHeader', `${d.loc} Cap Rate Outlook`);
+    setTxt('permitsDeptHeader', `${d.loc} Municipal Building & Permitting`);
 
     // KPIs
     if (d.cost) {
-      $('kpiCost').textContent = d.cost.labor.split('–')[0].trim() || '$8,500';
-      $('scopeLaborCost').textContent = d.cost.labor;
-      $('scopeMaterialCost').textContent = d.cost.materials;
-      $('scopeTimeline').textContent = d.cost.timeline;
+      setTxt('kpiCost', d.cost.labor.split('–')[0].trim() || '$8,500');
+      setTxt('scopeLaborCost', d.cost.labor);
+      setTxt('scopeMaterialCost', d.cost.materials);
+      setTxt('scopeTimeline', d.cost.timeline);
     }
 
     // Scope & Materials
-    $('scopeStepsList').innerHTML = (d.scope || []).map(s => `<li>${escapeHtml(s)}</li>`).join('');
-    $('materialList').innerHTML = (d.materials || []).map(m => `<li>${escapeHtml(m)}</li>`).join('');
+    setHtml('scopeStepsList', (d.scope || []).map(s => `<li>${escapeHtml(s)}</li>`).join(''));
+    setHtml('materialList', (d.materials || []).map(m => `<li>${escapeHtml(m)}</li>`).join(''));
 
     // Permits & Safety
-    $('permitText').textContent = d.permits;
-    $('safetyText').textContent = d.safety;
+    setTxt('permitText', d.permits);
+    setTxt('safetyText', d.safety);
 
-    // Upsell
-    $('upsellCards').innerHTML = (d.upsell || []).map(u => `
-      <div class="card bg-[#12161b] border border-[#3a434c] space-y-1.5">
-        <p class="font-bold text-sm text-indigo-300">${escapeHtml(u.service)}</p>
+    // Upsell Cards
+    setHtml('upsellCards', (d.upsell || []).map(u => `
+      <div class="card bg-[#12161b] border border-[#3a434c] space-y-1.5 p-3.5">
+        <p class="font-bold text-sm text-[#C9A15A]">${escapeHtml(u.service)}</p>
         <p class="text-xs text-[var(--muted-foreground,#94a3b8)] leading-relaxed">${escapeHtml(u.benefit)}</p>
       </div>
-    `).join('');
+    `).join(''));
 
     // Outreach
-    $('emailOutreachText').textContent = d.email;
-    $('socialOutreachText').textContent = d.social;
+    setTxt('emailOutreachText', d.email);
+    setTxt('socialOutreachText', d.social);
+
+    // AI Recommendations & QTO Table
+    renderAiRecommendations();
+    renderQtoTable(d.loc, state.currentPreset);
 
     updateFinancialCalc();
     syncComparisonSizing();
@@ -2128,7 +2446,7 @@ const BASE_SAMPLE_HOUSE = getBeforeImage();
     });
 
     // Hotspot clicks cycle specific architectural presets
-    $('.hotspot-zone').forEach(zone => {
+    $$('.hotspot-zone').forEach(zone => {
       zone.addEventListener('click', async (e) => {
         e.stopPropagation();
         const type = zone.dataset.zone;
@@ -2205,7 +2523,7 @@ const BASE_SAMPLE_HOUSE = getBeforeImage();
   });
 
   // ---------- EXPORT TO MARKDOWN ----------
-  $('exportReportBtn').addEventListener('click', () => {
+  $('exportReportBtn')?.addEventListener('click', () => {
     const d = state.data;
     const md = `# FACET Executive Renovation & Valuation Report
 Generated: ${new Date().toLocaleDateString()} | Location: ${d.loc}
@@ -2265,7 +2583,7 @@ ${d.social}
   });
 
   // ---------- PRINT PROPOSAL ----------
-  $('printProposalBtn').addEventListener('click', () => {
+  $('printProposalBtn')?.addEventListener('click', () => {
     window.print();
   });
 
@@ -2376,7 +2694,7 @@ ${d.social}
   // ---------- PIPELINE TRACKER & EXECUTION WITH AUTOMATIC TAB SWITCH ----------
   const STEPS = ['Insight', 'Inpainting', 'Scope', 'Estimates', 'Permits', 'Safety', 'Upsell', 'Outreach'];
   function renderTracker(stepStates = {}) {
-    const list = $('stepTracker');
+    const list = $('stepTracker') || $('pipelineTracker');
     if (!list) return;
     list.innerHTML = STEPS.map(s => {
       const st = stepStates[s] || 'waiting';
@@ -2471,6 +2789,56 @@ ${d.social}
   }
 
   $('runFullBtn')?.addEventListener('click', executeMultimodalAnalysis);
+
+  // ---------- AI NATURAL LANGUAGE PROMPT IMPROVER ----------
+  $('enhancePromptBtn')?.addEventListener('click', () => {
+    const descInput = $('projectDesc');
+    const loc = $('projectLoc')?.value || 'Austin, TX';
+    
+    // Architecturally synthesize an elite prompt
+    const enhancedPrompt = `Execute a comprehensive exterior architectural modernization for this ranch property in ${loc}: Apply breathable Romabio Classico mineral masonry limewash in warm Alabaster over the brick facade paired with Sherwin-Williams Iron Ore SW 7069 on eaves, fascia, and window trims. Install vertical kiln-dried Western Red Cedar tongue-and-groove shiplap cladding on the front gable. Upgrade front fenestrations to Andersen 400 Series Low-E matte black casements. Replace the garage door with a commercial-grade black anodized aluminum frame with satin-etched frosted glass panels, and crown the entryway with a 6x6 rough-sawn cedar timber column and dual-beam 3000K architectural cylinder LED sconces.`;
+    
+    if (descInput) descInput.value = enhancedPrompt;
+    state.data.desc = enhancedPrompt;
+    
+    // Highlight pills that match
+    document.querySelectorAll('.spec-pill').forEach(pill => {
+      pill.classList.add('border-emerald-500/60', 'text-emerald-300');
+    });
+
+    showNotice('✨ Prompt refined with AIA architectural specs, exact material grades, and fenestrations!');
+    renderAiRecommendations();
+  });
+
+  // ---------- SPECIFICATION QUICK PILLS ----------
+  document.querySelectorAll('.spec-pill').forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      const spec = e.currentTarget.getAttribute('data-spec');
+      const descInput = $('projectDesc');
+      if (!descInput) return;
+      let val = descInput.value.trim();
+      if (!val.toLowerCase().includes(spec.toLowerCase().slice(0, 15))) {
+        descInput.value = val ? `${val}. ${spec}.` : `${spec}.`;
+        e.currentTarget.classList.add('border-emerald-500/60', 'text-emerald-300');
+        showNotice(`+ Injected "${e.currentTarget.textContent.replace('+', '').trim()}" into renovation goals.`);
+      } else {
+        descInput.value = val.replace(spec + '.', '').replace(spec, '').replace(/\s+/g, ' ').trim();
+        e.currentTarget.classList.remove('border-emerald-500/60', 'text-emerald-300');
+        showNotice('Removed specification.');
+      }
+      state.data.desc = descInput.value;
+      renderAiRecommendations();
+    });
+  });
+
+  // Safe Print and Export listener attachments
+  $('exportReportBtn')?.addEventListener('click', () => {
+    // handled by export handler
+  });
+  $('printProposalBtn')?.addEventListener('click', () => {
+    window.print();
+  });
+
   $('heroRunBtn')?.addEventListener('click', executeMultimodalAnalysis);
 
   // ---------- INITIALIZATION ----------
