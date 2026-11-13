@@ -391,8 +391,306 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<style id="blueprint-hub-layer">
+  /* ==========================================================================
+     BLUEPRINT HUB LAYER · Metallic Sapphire & Brushed Silver
+     Applies the front-end-ui-interaction-animation-architect system on top
+     of the Fiduciary-OS machined-metal base. Purely additive: no app logic
+     depends on anything below.
+     ========================================================================== */
+  :root {
+    /* Ground */
+    --bp-ground-1: #0b1628;
+    --bp-ground-2: #070e1b;
+    --bp-ground-3: #04080f;
+
+    /* Sapphire scale */
+    --bp-sapphire-50:  #eaf2ff;
+    --bp-sapphire-200: #bfdbfe;
+    --bp-sapphire-300: #93c5fd;
+    --bp-sapphire-400: #60a5fa;
+    --bp-sapphire-500: #3b82f6;
+    --bp-sapphire-600: #2563eb;
+    --bp-sapphire-800: #1e3a8a;
+    --bp-luminous:     #7dd3fc;
+
+    /* Brushed silver scale */
+    --bp-silver-100: #eef2f6;
+    --bp-silver-300: #c3ccd6;
+    --bp-silver-500: #8592a0;
+    --bp-silver-700: #4a5563;
+
+    /* Blueprint linework */
+    --bp-line-minor: rgba(147, 197, 253, 0.045);
+    --bp-line-major: rgba(191, 219, 254, 0.085);
+    --bp-line-cad:   rgba(191, 219, 254, 0.11);
+    --bp-trace:      rgba(96, 165, 250, 0.17);
+
+    /* Motion tokens */
+    --ease-standard:   cubic-bezier(0.2, 0, 0, 1);
+    --ease-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
+    --ease-accelerate: cubic-bezier(0.3, 0, 0.8, 0.15);
+    --ease-out-expo:   cubic-bezier(0.16, 1, 0.3, 1);
+    --dur-1: 120ms;
+    --dur-2: 200ms;
+    --dur-3: 340ms;
+    --dur-4: 620ms;
+    --stagger: 45ms;
+
+    /* Re-tuned surface tokens (override the base system) */
+    --chrome-edge: linear-gradient(125deg, #4d5a69 0%, #d3dbe3 14%, #56636f 28%, #8996a3 46%, #f1f5f9 51%, #4a5664 68%, #a3afbb 100%);
+    --chrome-edge-copper: linear-gradient(125deg, #1e3a8a 0%, #bfdbfe 16%, #1e40af 30%, #7dd3fc 47%, #ffffff 51%, #2563eb 68%, #93c5fd 100%);
+    --card-fill: linear-gradient(150deg, rgba(24, 34, 52, 0.94), rgba(15, 22, 36, 0.95) 50%, rgba(10, 15, 26, 0.96));
+    --card-brush: repeating-linear-gradient(90deg, rgba(225, 236, 248, 0.018) 0 1px, transparent 1px 3px);
+    --card-sheen: linear-gradient(115deg, rgba(235, 243, 250, 0.06), transparent 34%, rgba(147, 197, 253, 0.03) 68%, transparent);
+  }
+
+  /* ---------- GROUND ---------- */
+  body {
+    background:
+      radial-gradient(1400px 700px at 72% -12%, rgba(37, 99, 235, 0.22), transparent 62%),
+      radial-gradient(900px 600px at -10% 110%, rgba(30, 58, 138, 0.28), transparent 60%),
+      linear-gradient(180deg, var(--bp-ground-1), var(--bp-ground-2) 55%, var(--bp-ground-3)) fixed !important;
+    background-color: var(--bp-ground-2) !important;
+  }
+
+  /* ---------- PARALLAX BLUEPRINT STAGE ---------- */
+  .bp-stage {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    contain: strict;
+  }
+  .bp-layer {
+    position: absolute;
+    inset: -64px;
+    will-change: transform;
+  }
+  .bp-grid {
+    background:
+      linear-gradient(var(--bp-line-major) 1px, transparent 1px) 0 0 / 160px 160px,
+      linear-gradient(90deg, var(--bp-line-major) 1px, transparent 1px) 0 0 / 160px 160px,
+      linear-gradient(var(--bp-line-minor) 1px, transparent 1px) 0 0 / 32px 32px,
+      linear-gradient(90deg, var(--bp-line-minor) 1px, transparent 1px) 0 0 / 32px 32px;
+  }
+  .bp-reveal {
+    background:
+      radial-gradient(320px circle at var(--px, -999px) var(--py, -999px), rgba(56, 132, 246, 0.16), transparent 70%),
+      linear-gradient(rgba(186, 230, 253, 0.32) 1px, transparent 1px) 0 0 / 32px 32px,
+      linear-gradient(90deg, rgba(186, 230, 253, 0.32) 1px, transparent 1px) 0 0 / 32px 32px;
+    -webkit-mask-image: radial-gradient(240px circle at var(--px, -999px) var(--py, -999px), #000 0%, rgba(0,0,0,0.35) 45%, transparent 72%);
+            mask-image: radial-gradient(240px circle at var(--px, -999px) var(--py, -999px), #000 0%, rgba(0,0,0,0.35) 45%, transparent 72%);
+    opacity: 0;
+    transition: opacity var(--dur-4) var(--ease-standard);
+  }
+  .bp-stage.bp-pointer-on .bp-reveal { opacity: 1; }
+  .bp-layer[data-depth="cad"], .bp-layer[data-depth="traces"] { bottom: -360px; }
+  .bp-layer svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .bp-cad * { vector-effect: non-scaling-stroke; }
+  .bp-cad text {
+    font-family: var(--fos-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    fill: rgba(191, 219, 254, 0.2);
+  }
+  .bp-trace-base { fill: none; stroke: var(--bp-trace); stroke-width: 1.25; stroke-linejoin: round; stroke-linecap: round; }
+  .bp-trace-halo { fill: none; stroke: rgba(56, 189, 248, 0.16); stroke-width: 7; stroke-linecap: round; }
+  .bp-trace-core { fill: none; stroke: var(--bp-luminous); stroke-width: 1.7; stroke-linecap: round; }
+  .bp-via { fill: var(--bp-ground-2); stroke: rgba(147, 197, 253, 0.32); stroke-width: 1.25; }
+  .bp-via-core { fill: rgba(147, 197, 253, 0.38); }
+  .bp-vignette {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 40%, transparent 55%, rgba(2, 5, 10, 0.55) 100%);
+  }
+
+  /* ---------- POINTER TELEMETRY HUD ---------- */
+  .bp-hud {
+    position: fixed;
+    right: 18px;
+    bottom: 16px;
+    z-index: 30;
+    pointer-events: none;
+    font-family: var(--fos-font-mono);
+    font-size: 10.5px;
+    line-height: 1.5;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--bp-sapphire-300);
+    padding: 8px 12px 8px 12px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    background:
+      linear-gradient(180deg, rgba(14, 22, 38, 0.86), rgba(8, 13, 24, 0.9)) padding-box,
+      var(--chrome-edge) border-box;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 30px rgba(0,0,0,0.5);
+    transition: opacity var(--dur-3) var(--ease-standard), transform var(--dur-3) var(--ease-out-expo);
+    font-variant-numeric: tabular-nums;
+  }
+  .bp-hud.bp-hud-dim { opacity: 0.18; transform: translateY(2px); }
+  .bp-hud b { color: var(--bp-silver-100); font-weight: 500; }
+  .bp-hud .bp-hud-row { display: flex; gap: 14px; justify-content: space-between; }
+  .bp-hud .bp-hud-dot {
+    display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--bp-luminous); box-shadow: 0 0 8px var(--bp-luminous);
+    margin-right: 6px; vertical-align: 1px;
+  }
+  @media (max-width: 767px) { .bp-hud { display: none; } }
+
+  /* ---------- BRUSHED-SILVER MASTHEAD ---------- */
+  header, .fx-mast {
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.014) 0 1px, transparent 1px 3px),
+      linear-gradient(180deg, rgba(36, 46, 62, 0.94) 0%, rgba(14, 20, 32, 0.96) 100%) !important;
+    border-bottom: 1px solid transparent !important;
+    border-image: linear-gradient(90deg, transparent, rgba(147,197,253,0.7) 20%, rgba(241,245,249,0.9) 50%, rgba(147,197,253,0.7) 80%, transparent) 1 !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+    -webkit-backdrop-filter: blur(10px) saturate(1.2);
+            backdrop-filter: blur(10px) saturate(1.2);
+  }
+
+  /* ---------- CARDS: brushed silver bezel + pointer-tracked specular ---------- */
+  .card, .card-panel {
+    /* declared here (not :root) so var(--mx/--my) resolve per card */
+    --bp-spot: radial-gradient(520px circle at var(--mx, -999px) var(--my, -999px), rgba(125, 211, 252, 0.085), transparent 42%);
+    --bp-spot-edge: radial-gradient(260px circle at var(--mx, -999px) var(--my, -999px), rgba(255, 255, 255, 0.95), rgba(147, 197, 253, 0.55) 30%, transparent 62%);
+    background:
+      var(--bp-spot) padding-box,
+      var(--card-sheen) padding-box,
+      var(--card-brush) padding-box,
+      var(--card-fill) padding-box,
+      var(--bp-spot-edge) border-box,
+      var(--chrome-edge) border-box !important;
+    transition:
+      transform var(--dur-3) var(--ease-out-expo),
+      box-shadow var(--dur-3) var(--ease-standard) !important;
+  }
+  .card:hover, .card-hover:hover {
+    background:
+      var(--bp-spot) padding-box,
+      var(--card-sheen) padding-box,
+      var(--card-brush) padding-box,
+      var(--card-fill) padding-box,
+      var(--bp-spot-edge) border-box,
+      var(--chrome-edge-copper) border-box !important;
+    box-shadow: var(--card-bevel), 0 0 0 1px rgba(125, 211, 252, 0.06), 0 0 32px rgba(37, 99, 235, 0.28), var(--card-shadow);
+    transform: translateY(-2px);
+  }
+
+  /* ---------- BUTTONS: specular sweep ---------- */
+  .btn-primary, .fx-btn-primary {
+    background:
+      linear-gradient(110deg, transparent 38%, rgba(255,255,255,0.42) 50%, transparent 62%) -160% 0 / 260% 100% no-repeat,
+      linear-gradient(180deg, #4b8df8 0%, #1d4ed8 60%, #1e3a8a 100%) !important;
+    transition:
+      background-position var(--dur-4) var(--ease-out-expo),
+      transform var(--dur-2) var(--ease-out-expo),
+      box-shadow var(--dur-2) var(--ease-standard) !important;
+  }
+  .btn-primary:hover, .fx-btn-primary:hover {
+    background:
+      linear-gradient(110deg, transparent 38%, rgba(255,255,255,0.42) 50%, transparent 62%) 160% 0 / 260% 100% no-repeat,
+      linear-gradient(180deg, #6aa5fb 0%, #2563eb 60%, #1d4ed8 100%) !important;
+  }
+  .btn-primary:active, .fx-btn-primary:active { transform: translateY(0) scale(0.975); transition-duration: var(--dur-1) !important; }
+  .btn-secondary, .fx-btn-dark {
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 3px),
+      linear-gradient(180deg, #273246, #182030) !important;
+    transition: border-color var(--dur-2) var(--ease-standard), box-shadow var(--dur-2) var(--ease-standard), transform var(--dur-2) var(--ease-out-expo) !important;
+  }
+  .btn-secondary:hover, .fx-btn-dark:hover {
+    border-color: var(--bp-silver-300) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.16), 0 0 0 1px rgba(147,197,253,0.12), 0 8px 20px rgba(0,0,0,0.45);
+  }
+  .btn-secondary:active, .fx-btn-dark:active { transform: scale(0.975); }
+
+  /* ---------- TABS: luminous rail indicator ---------- */
+  .tab-item {
+    position: relative;
+    transition:
+      color var(--dur-2) var(--ease-standard),
+      background-color var(--dur-2) var(--ease-standard),
+      border-color var(--dur-2) var(--ease-standard),
+      box-shadow var(--dur-3) var(--ease-standard) !important;
+  }
+  .tab-item::after {
+    content: "";
+    position: absolute;
+    left: 12px; right: 12px; bottom: -1px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, transparent, var(--bp-luminous), #ffffff, var(--bp-luminous), transparent);
+    box-shadow: 0 0 12px rgba(125, 211, 252, 0.8);
+    transform: scaleX(0);
+    opacity: 0;
+    transition: transform var(--dur-3) var(--ease-out-expo), opacity var(--dur-2) var(--ease-standard);
+  }
+  .tab-item[aria-selected="true"] {
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.022) 0 1px, transparent 1px 3px),
+      linear-gradient(180deg, #34425a, #1f293b);
+    border-color: #6b7a8c;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 6px 18px rgba(0, 0, 0, 0.35), 0 0 22px rgba(37, 99, 235, 0.22);
+  }
+  .tab-item[aria-selected="true"]::after { transform: scaleX(1); opacity: 1; }
+
+  /* ---------- FORM FIELDS ---------- */
+  .field {
+    background: linear-gradient(180deg, rgba(8, 13, 24, 0.92), rgba(13, 20, 34, 0.92));
+    transition: border-color var(--dur-2) var(--ease-standard), box-shadow var(--dur-2) var(--ease-standard);
+  }
+  .field:hover { border-color: var(--bp-silver-500); }
+
+  /* ---------- FOCUS (WCAG 2.4.7 / 2.4.11) ---------- */
+  :where(button, a, [role="tab"], input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--bp-luminous) !important;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px rgba(125, 211, 252, 0.22);
+  }
+
+  /* ---------- PANEL ENTRANCE CHOREOGRAPHY ---------- */
+  @keyframes bpRise {
+    from { opacity: 0; transform: translate3d(0, 14px, 0); }
+    to   { opacity: 1; transform: none; }
+  }
+  .bp-enter > * {
+    animation: bpRise var(--dur-4) var(--ease-out-expo) both;
+    animation-delay: calc(var(--bp-i, 0) * var(--stagger));
+  }
+  .fade-in { animation: bpRise var(--dur-3) var(--ease-out-expo); }
+
+  /* ---------- REDUCED MOTION ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    .bp-layer { transform: none !important; }
+    .bp-reveal { display: none; }
+    .bp-trace-halo, .bp-trace-core { display: none; }
+    .bp-enter > *, .fade-in { animation: none !important; }
+    .card:hover, .card-hover:hover { transform: none; }
+    .tab-item::after { transition: none; }
+    *, *::before, *::after { scroll-behavior: auto !important; }
+  }
+  @media (forced-colors: active) {
+    .bp-stage, .bp-hud { display: none; }
+  }
+</style>
 </head>
 <body class="antialiased selection:bg-indigo-500 selection:text-white">
+
+<!-- BLUEPRINT HUB STAGE (decorative, behind all content) -->
+<div class="bp-stage" id="bpStage" aria-hidden="true">
+  <div class="bp-layer bp-grid" data-depth="grid"></div>
+  <div class="bp-layer bp-cad-layer" data-depth="cad"></div>
+  <div class="bp-layer bp-traces" data-depth="traces"></div>
+  <div class="bp-layer bp-reveal" data-depth="reveal"></div>
+  <div class="bp-vignette"></div>
+</div>
+<div class="bp-hud" id="bpHud" aria-hidden="true">
+  <div class="bp-hud-row"><span><span class="bp-hud-dot"></span>Sheet</span><b data-hud="sheet">A-101 · INTAKE</b></div>
+  <div class="bp-hud-row"><span>X</span><b data-hud="x">00'-00"</b><span>Y</span><b data-hud="y">00'-00"</b></div>
+  <div class="bp-hud-row"><span>Scale 1:48</span><span>V <b data-hud="v">00.00</b></span></div>
+</div>
 
 <div class="max-w-7xl mx-auto p-4 md:p-8 space-y-6">
 
@@ -476,8 +774,8 @@
             </svg>
           </div>
         </div>
-        <div>
-          <div class="flex items-center gap-2">
+        <div class="min-w-0">
+          <div class="flex flex-wrap items-center gap-2">
             <h1 class="text-2xl font-display font-extrabold tracking-wider text-[#F6F1E7]">FACET</h1>
             <span class="badge badge-brass text-[10px] font-mono px-2 py-0.5 rounded uppercase font-bold tracking-wider">L4 Engine</span>
             <span class="badge text-[10px] font-mono px-2 py-0.5 rounded border border-blue-500/40 bg-blue-500/20 text-[#93c5fd] font-semibold">DEMO RECORD</span>
@@ -2924,6 +3222,313 @@ ${d.social}
   syncComparisonSizing();
   // Start on Tab 1: Property Address & Upload (Landing Page Overview)
   setTab('input');
+})();
+</script>
+<!-- BLUEPRINT HUB LAYER: parallax CAD stage, luminous traces, pointer telemetry, choreography -->
+<script>
+(() => {
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  const stage = document.getElementById('bpStage');
+  const hud = document.getElementById('bpHud');
+  if (!stage) return;
+
+  const reduceMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const finePointer = window.matchMedia('(pointer: fine)').matches;
+  let reduced = reduceMQ.matches;
+
+  const layers = {
+    grid: stage.querySelector('[data-depth="grid"]'),
+    cad: stage.querySelector('[data-depth="cad"]'),
+    traces: stage.querySelector('[data-depth="traces"]'),
+    reveal: stage.querySelector('[data-depth="reveal"]')
+  };
+  // Parallax depth: pointer travel (px) and scroll factor per layer
+  const DEPTH = {
+  // Repeating layers wrap their scroll offset (mod); one-off drawings clamp to their overscan.
+    grid:   { p: 6,  s: 0.04, mod: 160 },
+    cad:    { p: 16, s: 0.08, clamp: 300 },
+    traces: { p: 30, s: 0.14, clamp: 300 },
+    reveal: { p: 6,  s: 0.04, mod: 160 }
+  };
+  const scrollOffset = (d) => {
+    const v = scrollY * d.s;
+    return d.mod ? v % d.mod : Math.min(v, d.clamp);
+  };
+
+  const el = (tag, attrs, parent) => {
+    const n = document.createElementNS(SVG_NS, tag);
+    for (const k in attrs) n.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(n);
+    return n;
+  };
+
+  // Seeded PRNG so the board is stable between visits
+  let seed = 0x5a99;
+  const rand = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+  const pick = (arr) => arr[Math.floor(rand() * arr.length)];
+
+  // ---------------- CAD SCHEMATIC (static, drawn once) ----------------
+  function drawCad() {
+    const svg = el('svg', { viewBox: '0 0 1600 1000', preserveAspectRatio: 'xMidYMid slice', 'aria-hidden': 'true', class: 'bp-cad' });
+    const ink = { fill: 'none', stroke: 'rgba(191,219,254,0.11)', 'stroke-width': 1 };
+    const faint = { fill: 'none', stroke: 'rgba(191,219,254,0.07)', 'stroke-width': 1, 'stroke-dasharray': '6 6' };
+    const g = el('g', {}, svg);
+
+    // Front elevation: gable house + garage wing
+    const h = el('g', { transform: 'translate(930 330)' }, g);
+    el('path', { d: 'M0 300 V120 L170 20 L340 120 V300 Z', ...ink }, h);
+    el('path', { d: 'M340 300 V170 L560 170 V300', ...ink }, h);
+    el('path', { d: 'M330 175 L570 175', ...ink }, h);
+    el('path', { d: 'M-20 300 H600', ...ink, 'stroke-width': 1.4 }, h);
+    el('rect', { x: 40, y: 160, width: 70, height: 90, ...ink }, h);
+    el('path', { d: 'M75 160 V250 M40 205 H110', ...ink }, h);
+    el('rect', { x: 230, y: 160, width: 70, height: 90, ...ink }, h);
+    el('path', { d: 'M265 160 V250 M230 205 H300', ...ink }, h);
+    el('rect', { x: 140, y: 190, width: 60, height: 110, ...ink }, h);
+    el('circle', { cx: 170, cy: 95, r: 22, ...ink }, h);
+    el('rect', { x: 370, y: 200, width: 160, height: 100, ...ink }, h);
+    for (let i = 1; i < 5; i++) el('path', { d: `M370 ${200 + i * 20} H530`, ...ink }, h);
+    // Dimension strings
+    const dim = (x1, y1, x2, y2, label, tx, ty) => {
+      el('path', { d: `M${x1} ${y1} L${x2} ${y2}`, ...ink }, h);
+      el('path', { d: `M${x1 - 4} ${y1 + 4} L${x1 + 4} ${y1 - 4} M${x2 - 4} ${y2 + 4} L${x2 + 4} ${y2 - 4}`, ...ink }, h);
+      const t = el('text', { x: tx, y: ty, 'text-anchor': 'middle' }, h); t.textContent = label;
+    };
+    dim(0, 340, 340, 340, "42'-6\"", 170, 332);
+    dim(340, 340, 560, 340, "27'-0\"", 450, 332);
+    el('path', { d: 'M0 305 V350 M340 305 V350 M560 305 V350', ...faint }, h);
+    el('path', { d: 'M-40 20 V300', ...ink }, h);
+    el('path', { d: 'M-44 24 L-36 16 M-44 304 L-36 296', ...ink }, h);
+    const rt = el('text', { x: -52, y: 160, transform: 'rotate(-90 -52 160)', 'text-anchor': 'middle' }, h); rt.textContent = "RIDGE 24'-0\"";
+    const el1 = el('text', { x: 0, y: -18 }, h); el1.textContent = 'FRONT ELEVATION · A-201';
+
+    // Site plan: lot with setbacks
+    const s = el('g', { transform: 'translate(150 560)' }, g);
+    el('path', { d: 'M0 0 L360 -20 L390 300 L20 320 Z', ...ink }, s);
+    el('path', { d: 'M40 40 L330 24 L352 262 L56 278 Z', ...faint }, s);
+    el('rect', { x: 110, y: 90, width: 170, height: 120, ...ink, transform: 'rotate(-3 195 150)' }, s);
+    const sp = el('text', { x: 0, y: -34 }, s); sp.textContent = 'SITE PLAN · LOT 0104 · SF-3';
+    const sb = el('text', { x: 200, y: 345, 'text-anchor': 'middle' }, s); sb.textContent = "FRONT SETBACK 25'-0\"";
+
+    // North arrow / compass
+    const c = el('g', { transform: 'translate(170 170)' }, g);
+    el('circle', { r: 44, ...ink }, c);
+    el('circle', { r: 30, ...faint }, c);
+    el('path', { d: 'M0 -58 V58 M-58 0 H58', ...ink }, c);
+    el('path', { d: 'M0 -40 L9 0 L0 -8 L-9 0 Z', fill: 'rgba(191,219,254,0.16)', stroke: 'rgba(191,219,254,0.2)' }, c);
+    const n = el('text', { x: 0, y: -66, 'text-anchor': 'middle' }, c); n.textContent = 'N';
+
+    // Section markers & registration crosses
+    [[620, 140], [1480, 760], [760, 860]].forEach(([x, y], i) => {
+      const m = el('g', { transform: `translate(${x} ${y})` }, g);
+      el('circle', { r: 18, ...ink }, m);
+      el('path', { d: 'M-18 0 H18', ...ink }, m);
+      const a = el('text', { x: 0, y: -4, 'text-anchor': 'middle' }, m); a.textContent = String(i + 1);
+      const b = el('text', { x: 0, y: 12, 'text-anchor': 'middle' }, m); b.textContent = 'A3';
+    });
+    [[40, 40], [1560, 40], [40, 960], [1560, 960]].forEach(([x, y]) => {
+      el('path', { d: `M${x - 12} ${y} H${x + 12} M${x} ${y - 12} V${y + 12}`, ...ink }, g);
+      el('circle', { cx: x, cy: y, r: 6, ...ink }, g);
+    });
+
+    // Title block
+    const tb = el('g', { transform: 'translate(1250 880)' }, g);
+    el('rect', { x: 0, y: 0, width: 300, height: 80, ...ink }, tb);
+    el('path', { d: 'M0 28 H300 M180 28 V80', ...ink }, tb);
+    const t1 = el('text', { x: 12, y: 19 }, tb); t1.textContent = 'FACET · FOUR-SIDED PROPERTY ENGINE';
+    const t2 = el('text', { x: 12, y: 50 }, tb); t2.textContent = 'SHEET A-101';
+    const t3 = el('text', { x: 12, y: 68 }, tb); t3.textContent = 'SCALE 1:48';
+    const t4 = el('text', { x: 192, y: 50 }, tb); t4.textContent = 'REV 04';
+    const t5 = el('text', { x: 192, y: 68 }, tb); t5.textContent = 'SAPPHIRE';
+
+    layers.cad.appendChild(svg);
+  }
+
+  // ---------------- CIRCUIT TRACES (regenerated on resize) ----------------
+  let pulseAnims = [];
+  function drawTraces() {
+    pulseAnims.forEach(a => a.cancel());
+    pulseAnims = [];
+    layers.traces.textContent = '';
+    seed = 0x5a99;
+
+    const W = layers.traces.clientWidth, H = layers.traces.clientHeight;
+    const STEP = 32;
+    const svg = el('svg', { width: W, height: H, 'aria-hidden': 'true' });
+    const gBase = el('g', {}, svg), gPulse = el('g', {}, svg), gVia = el('g', {}, svg);
+    const count = Math.min(30, Math.max(10, Math.round((W * H) / 70000)));
+    const DIRS = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]];
+
+    for (let t = 0; t < count; t++) {
+      let x = Math.round((rand() * W) / STEP) * STEP;
+      let y = Math.round((rand() * H) / STEP) * STEP;
+      let dir = pick(DIRS.slice(0, 4));
+      const pts = [[x, y]];
+      const segs = 3 + Math.floor(rand() * 4);
+      for (let s = 0; s < segs; s++) {
+        const len = STEP * (2 + Math.floor(rand() * 7));
+        x += dir[0] * len; y += dir[1] * len;
+        pts.push([x, y]);
+        // Turn 45 or 90 degrees, never reverse — reads as a routed PCB trace
+        const options = DIRS.filter(d => !(d[0] === -dir[0] && d[1] === -dir[1]) && !(d[0] === dir[0] && d[1] === dir[1]));
+        dir = pick(options);
+      }
+      const d = 'M' + pts.map(p => p.join(' ')).join(' L');
+      el('path', { d, class: 'bp-trace-base' }, gBase);
+      [pts[0], pts[pts.length - 1]].forEach(([vx, vy]) => {
+        el('circle', { cx: vx, cy: vy, r: 4.5, class: 'bp-via' }, gVia);
+        el('circle', { cx: vx, cy: vy, r: 1.6, class: 'bp-via-core' }, gVia);
+      });
+
+      if (!reduced && rand() < 0.6) {
+        const halo = el('path', { d, class: 'bp-trace-halo' }, gPulse);
+        const core = el('path', { d, class: 'bp-trace-core' }, gPulse);
+        const L = core.getTotalLength();
+        const seg = 46 + rand() * 40;
+        const duration = 2600 + L * 4 + rand() * 2400;
+        const delay = rand() * 6000;
+        [halo, core].forEach(p => {
+          p.style.strokeDasharray = `${seg} ${L + seg}`;
+          const anim = p.animate(
+            [
+              { strokeDashoffset: seg, opacity: 0 },
+              { strokeDashoffset: seg * 0.4, opacity: 1, offset: 0.04 },
+              { strokeDashoffset: -L * 0.96, opacity: 1, offset: 0.62 },
+              { strokeDashoffset: -L, opacity: 0, offset: 0.66 },
+              { strokeDashoffset: -L, opacity: 0 }
+            ],
+            { duration, delay, iterations: Infinity, easing: 'cubic-bezier(0.45, 0, 0.55, 1)' }
+          );
+          pulseAnims.push(anim);
+        });
+      }
+    }
+    layers.traces.appendChild(svg);
+    if (document.hidden) pulseAnims.forEach(a => a.pause());
+  }
+
+  // ---------------- PARALLAX + POINTER TELEMETRY ----------------
+  const target = { x: 0, y: 0 }, current = { x: 0, y: 0 };
+  let raf = 0, scrollY = window.scrollY;
+  const px = { x: -999, y: -999 };
+
+  function frame() {
+    raf = 0;
+    current.x += (target.x - current.x) * 0.085;
+    current.y += (target.y - current.y) * 0.085;
+    for (const k in layers) {
+      const d = DEPTH[k];
+      const tx = -current.x * d.p;
+      const ty = -current.y * d.p - scrollOffset(d);
+      layers[k].style.transform = `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, 0)`;
+    }
+    // Reveal mask follows the pointer in the reveal layer's own coordinates
+    const r = DEPTH.reveal;
+    layers.reveal.style.setProperty('--px', `${px.x + 64 + current.x * r.p}px`);
+    layers.reveal.style.setProperty('--py', `${px.y + 64 + current.y * r.p + scrollOffset(r)}px`);
+    if (Math.abs(target.x - current.x) > 0.0008 || Math.abs(target.y - current.y) > 0.0008) schedule();
+  }
+  const schedule = () => { if (!raf && !reduced) raf = requestAnimationFrame(frame); };
+
+  const ftIn = (pxv) => {
+    // 96 px/in on screen at 1:48 → 1 screen px = 0.5 real inches
+    const inches = Math.max(0, Math.round(pxv * 0.5));
+    return `${String(Math.floor(inches / 12)).padStart(2, '0')}'-${String(inches % 12).padStart(2, '0')}"`;
+  };
+  const SHEETS = { input: 'A-101 · INTAKE', overview: 'A-201 · SIGHT', scope: 'A-301 · WORK', financial: 'A-401 · WORTH', compliance: 'A-501 · CODE', sales: 'A-601 · STORY', settings: 'A-901 · GATEWAY' };
+  const hudX = hud && hud.querySelector('[data-hud="x"]');
+  const hudY = hud && hud.querySelector('[data-hud="y"]');
+  const hudSheet = hud && hud.querySelector('[data-hud="sheet"]');
+  const hudVel = hud && hud.querySelector('[data-hud="v"]');
+  let lastMove = { x: 0, y: 0, t: performance.now() };
+
+  function onPointer(e) {
+    if (e.pointerType && e.pointerType !== 'mouse' && e.pointerType !== 'pen') return;
+    px.x = e.clientX; px.y = e.clientY;
+    target.x = (e.clientX / innerWidth) - 0.5;
+    target.y = (e.clientY / innerHeight) - 0.5;
+    stage.classList.add('bp-pointer-on');
+    schedule();
+
+    // Card specular follows pointer (card-relative coordinates)
+    const card = e.target.closest && e.target.closest('.card, .card-panel');
+    if (card) {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${(e.clientX - r.left).toFixed(0)}px`);
+      card.style.setProperty('--my', `${(e.clientY - r.top).toFixed(0)}px`);
+    }
+
+    if (hud) {
+      const now = performance.now();
+      const dt = Math.max(1, now - lastMove.t);
+      const v = Math.hypot(e.clientX - lastMove.x, e.clientY - lastMove.y) / dt;
+      lastMove = { x: e.clientX, y: e.clientY, t: now };
+      hudX.textContent = ftIn(e.clientX);
+      hudY.textContent = ftIn(e.clientY + window.scrollY);
+      hudVel.textContent = v.toFixed(2).padStart(5, '0');
+      const hr = hud.getBoundingClientRect();
+      const near = e.clientX > hr.left - 160 && e.clientY > hr.top - 120;
+      hud.classList.toggle('bp-hud-dim', near);
+    }
+  }
+  function clearCardSpot(e) {
+    const card = e.target.closest && e.target.closest('.card, .card-panel');
+    if (card && !card.contains(e.relatedTarget)) {
+      card.style.removeProperty('--mx');
+      card.style.removeProperty('--my');
+    }
+  }
+
+  // ---------------- PANEL CHOREOGRAPHY ----------------
+  function choreograph(panel) {
+    if (reduced) return;
+    panel.classList.remove('bp-enter');
+    [...panel.children].forEach((c, i) => c.style.setProperty('--bp-i', Math.min(i, 8)));
+    void panel.offsetWidth; // restart animation
+    panel.classList.add('bp-enter');
+    clearTimeout(panel._bpT);
+    panel._bpT = setTimeout(() => panel.classList.remove('bp-enter'), 1400);
+  }
+  const panelObserver = new MutationObserver((muts) => {
+    muts.forEach(m => {
+      const p = m.target;
+      const wasHidden = (m.oldValue || '').split(/\s+/).includes('hidden');
+      if (wasHidden && !p.classList.contains('hidden')) {
+        choreograph(p);
+        if (hudSheet) hudSheet.textContent = SHEETS[p.dataset.panel] || 'A-000';
+      }
+    });
+  });
+  document.querySelectorAll('[data-panel]').forEach(p => panelObserver.observe(p, { attributes: true, attributeFilter: ['class'], attributeOldValue: true }));
+
+  // ---------------- LIFECYCLE ----------------
+  drawCad();
+  drawTraces();
+  frame();
+  const initial = document.querySelector('[data-panel]:not(.hidden)');
+  if (initial && hudSheet) hudSheet.textContent = SHEETS[initial.dataset.panel] || 'A-000';
+
+  if (finePointer) {
+    document.addEventListener('pointermove', onPointer, { passive: true });
+    document.addEventListener('pointerout', clearCardSpot, { passive: true });
+    document.documentElement.addEventListener('pointerleave', () => stage.classList.remove('bp-pointer-on'));
+  } else if (hud) {
+    hud.hidden = true;
+  }
+  window.addEventListener('scroll', () => { scrollY = window.scrollY; schedule(); if (reduced) frame(); }, { passive: true });
+
+  let resizeT;
+  window.addEventListener('resize', () => { clearTimeout(resizeT); resizeT = setTimeout(drawTraces, 180); }, { passive: true });
+
+  document.addEventListener('visibilitychange', () => {
+    pulseAnims.forEach(a => (document.hidden ? a.pause() : a.play()));
+  });
+  reduceMQ.addEventListener && reduceMQ.addEventListener('change', (e) => {
+    reduced = e.matches;
+    target.x = target.y = current.x = current.y = 0;
+    drawTraces();
+    frame();
+  });
 })();
 </script>
 </body>
