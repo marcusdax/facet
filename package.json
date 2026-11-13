@@ -1,0 +1,23 @@
+{
+  "name": "facet",
+  "version": "1.0.0",
+  "description": "FACET · Every property has four sides: Sight · Worth · Work · Story · Powered by The Loupe & Fiduciary OS Machined-Metal Architecture",
+  "main": "server.mjs",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "keywords": [
+    "proptech",
+    "architecture",
+    "renovation",
+    "fiduciary-os",
+    "avm",
+    "underwriting",
+    "cadastral-gis",
+    "crossbeam",
+    "qto"
+  ],
+  "author": "Marcus Dax",
+  "license": "MIT"
+}
